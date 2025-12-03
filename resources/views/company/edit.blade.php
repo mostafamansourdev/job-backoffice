@@ -1,3 +1,18 @@
+@php
+  $isAdmin = auth()->user()->role == 'admin';
+  $isCompanyOwner = auth()->user()->role == 'company-owner';
+
+  if ($isAdmin) {
+      $formAction = route('companies.update', [
+          'company' => $company->id,
+          'redirectToList' => request('redirectToList'),
+      ]);
+  } else {
+      $formAction = route('my-company.update');
+  }
+
+@endphp
+
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800">
@@ -10,9 +25,7 @@
 
       {{-- form to edit Company --}}
 
-      <form
-        action="{{ route('companies.update', ['company' => $company->id, 'redirectToList' => request('redirectToList')]) }}"
-        method="POST">
+      <form action="{{ $formAction }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -149,10 +162,18 @@
 
         {{-- form actions --}}
         <div class="flex items-center justify-end mt-2 space-x-6">
-          {{-- cancel --}}
-          <a href="{{ route('companies.index') }}" class="text-gray-500 hover:text-gray-700 font-bold ">
-            Cancel
-          </a>
+          {{-- cancel for the admin --}}
+          @if ($isAdmin)
+            <a href="{{ route('companies.index') }}" class="text-gray-500 hover:text-gray-700 font-bold ">
+              Cancel
+            </a>
+          @endif
+          {{-- cancel for the company owner --}}
+          @if ($isCompanyOwner)
+            <a href="{{ route('my-company.show') }}" class="text-gray-500 hover:text-gray-700 font-bold ">
+              Cancel
+            </a>
+          @endif
 
           {{-- submit --}}
           <button type="submit"

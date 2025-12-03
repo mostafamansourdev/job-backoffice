@@ -56,7 +56,7 @@
 
         <tbody class="text-gray-900 text-md font-medium divide-y divide-gray-200">
 
-          @forelse ($mostAppliedJobs as $job)
+          @forelse ($analytics['mostAppliedJobs'] as $job)
             <tr>
               <td class="py-4">{{ $job->title }}</td>
               <td>{{ $job->company->name }}</td>
@@ -90,7 +90,7 @@
         </thead>
 
         <tbody class="text-gray-900 text-md font-medium divide-y divide-gray-200">
-          @forelse ($jobConversionRates as $job)
+          @forelse ($analytics['jobConversionRates'] as $job)
             <tr>
               <td class="py-4">{{ $job->title }}</td>
               <td>{{ $job->viewCount }}</td>

@@ -1,3 +1,12 @@
+@php
+  $isCompanyOwner = auth()->user()->role === 'company-owner';
+  $startIndex = (request()->get('page', 1) - 1) * 6;
+  $statusColors = [
+      'pending' => 'text-yellow-600',
+      'accepted' => 'text-green-600',
+      'rejected' => 'text-red-600',
+  ];
+@endphp
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800">

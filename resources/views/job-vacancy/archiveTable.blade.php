@@ -1,6 +1,3 @@
-@php
-  $startIndex = (request()->get('page', 1) - 1) * 10;
-@endphp
 {{-- create Job category table --}}
 <table class=" min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow mt-4 ">
   <!-- head -->

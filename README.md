@@ -17,3 +17,26 @@
 -   Laravel
 -   MySQL (mariaDB)
 -   Tailwind CSS
+
+## what did I do so far
+
+Made a navigation system for the admins and the company owner
+And built a Role middleware to validate owner based access control "OBAC"
+
+The Admin has access to: (can see all companies related data)
+
+-   Dashboard
+-   job applications
+-   job vacancies
+-   companies
+-   job categories
+-   users
+
+The company owner has access to: (can see only his company related data)
+
+-   Dashboard
+-   job applications
+-   job vacancies
+-   my company
+
+All the data are fake data made with seeded to test the users with all relations to the database

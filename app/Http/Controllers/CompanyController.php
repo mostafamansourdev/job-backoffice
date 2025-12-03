@@ -77,19 +77,20 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id = null)
     {
-        $company = Company::findOrFail($id);
+        $company = $this->getCompany($id);
+
         return view('company.show', compact('company'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = null)
     {
         $industries = $this->industries;
-        $company = Company::findOrFail($id);
+        $company = $this->getCompany($id);
 
         return view('company.edit', compact('company', 'industries'));
     }
@@ -97,10 +98,10 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CompanyUpdateRequest $request, string $id)
+    public function update(CompanyUpdateRequest $request, string $id = null)
     {
         $validated = $request->validated();
-        $company = Company::findOrFail($id);
+        $company = $this->getCompany($id);
 
         $company->update([
             'name' => $validated['name'],
@@ -122,6 +123,10 @@ class CompanyController extends Controller
         // the 'redirectToList' query is used to determine whether to redirect to the company list or stay on the company details page
         // and it is passed as a query parameter from the edit form taken from the show page (companies.show) not the list page (companies.index)
         // but if not present, default to redirecting to the list
+
+        if (auth()->user()->role === 'company-owner') {
+            return redirect()->route('my-company.show')->with('success', 'Company updated successfully.');
+        }
         if ($request->query('redirectToList') === 'false') {
             return redirect()->route('companies.show', compact('company'))->with('success', 'Company updated successfully.');
         }
@@ -145,5 +150,16 @@ class CompanyController extends Controller
         $company = Company::withTrashed()->findOrFail($id);
         $company->restore();
         return redirect()->route('companies.index', ['archive' => 'true'])->with('success', "\"" . $company->name . "\"" . ' restored successfully.');
+    }
+
+    private function getCompany(string $id = null)
+    {
+        if ($id) {
+            return Company::findOrFail($id);
+        } else {
+            // get the company of the authenticated company-owner
+            $user = auth()->user();
+            return Company::where('ownerId', $user->id)->firstOrFail();
+        }
     }
 }

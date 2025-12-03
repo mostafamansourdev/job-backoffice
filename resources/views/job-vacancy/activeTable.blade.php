@@ -1,7 +1,3 @@
-@php
-  $startIndex = (request()->get('page', 1) - 1) * 10;
-@endphp
-
 {{-- create Job category table --}}
 <table class=" min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow mt-4 ">
   <!-- head -->
@@ -9,6 +5,9 @@
     <tr class="*:px-6 *:py-3 *:text-left *:text-sm *:font-semibold *:text-gray-600 *:border-r">
       <th class="w-3"></th>
       <th>Name</th>
+      @if ($isCompanyOwner)
+        <th>Company</th>
+      @endif
       <th class="!border-r-0 w-7">Actions</th>
     </tr>
   </thead>
@@ -27,7 +26,12 @@
             {{ $jobVacancy->title }}
           </a>
         </td>
-
+        {{-- company name --}}
+        @if ($isCompanyOwner)
+          <td>
+            {{ $jobVacancy->company->name }}
+          </td>
+        @endif
         {{-- actions --}}
         <td class="!border-r-0 flex gap-x-6">
           {{-- Edit button --}}

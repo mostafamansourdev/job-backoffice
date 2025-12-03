@@ -17,6 +17,10 @@ class JobVacancyController extends Controller
     public function index(Request $request)
     {
         $query = JobVacancy::latest();
+        // Company Owner Filter only their company's job vacancies
+        if (auth()->user()->role === 'company-owner') {
+            $query->where('companyId', auth()->user()->company->id);
+        }
 
         // Archived
         if ($request->input('archive') == 'true') {

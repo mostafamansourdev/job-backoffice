@@ -1,3 +1,7 @@
+@php
+  $isCompanyOwner = auth()->user()->role === 'company-owner';
+  $startIndex = (request()->get('page', 1) - 1) * 10;
+@endphp
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800">

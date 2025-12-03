@@ -1,7 +1,3 @@
-@php
-  $startIndex = (request()->get('page', 1) - 1) * 6;
-@endphp
-
 {{-- create Job category table --}}
 <table class=" min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow mt-4 ">
   <!-- head -->
@@ -10,7 +6,9 @@
       <th class="w-3"></th>
       <th>Applicant Name</th>
       <th>Job Vacancy Position</th>
-      <th>Company Name</th>
+      @if (!$isCompanyOwner)
+        <th>Company Name</th>
+      @endif
       <th>Status</th>
       <th>AI Score</th>
       <th class="!border-r-0 w-7">Actions</th>
@@ -34,11 +32,13 @@
           {{ $jobApplication->jobVacancy?->title ?? 'N/A' }}
         </td>
         {{-- company name --}}
-        <td>
-          {{ $jobApplication->jobVacancy?->company?->name ?? 'N/A' }}
-        </td>
+        @if (!$isCompanyOwner)
+          <td>
+            {{ $jobApplication->jobVacancy?->company?->name ?? 'N/A' }}
+          </td>
+        @endif
         {{-- status --}}
-        <td>
+        <td class="{{ $statusColors[$jobApplication->status] }} capitalize">
           {{ $jobApplication->status }}
         </td>
         {{-- ai score --}}

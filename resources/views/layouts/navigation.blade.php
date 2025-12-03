@@ -1,3 +1,8 @@
+@php
+  $isAdmin = auth()->user()->role == 'admin';
+  $isCompanyOwner = auth()->user()->role == 'company-owner';
+@endphp
+
 <nav class=" flex flex-col w-[250px] h-screen bg-white border-r border-gray-200">
 
   {{-- Application Logo --}}
@@ -17,25 +22,37 @@
       Dashboard
     </x-nav-link>
 
-    <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-      Companies
-    </x-nav-link>
-
     <x-nav-link :href="route('job-applications.index')" :active="request()->routeIs('job-applications.index')">
       Job Applications
-    </x-nav-link>
-
-    <x-nav-link :href="route('job-categories.index')" :active="request()->routeIs('job-categories.index')">
-      Job Categories
     </x-nav-link>
 
     <x-nav-link :href="route('job-vacancies.index')" :active="request()->routeIs('job-vacancies.index')">
       Job Vacancies
     </x-nav-link>
 
-    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-      Users
-    </x-nav-link>
+    @if ($isCompanyOwner)
+      <x-nav-link :href="route('my-company.show')" :active="request()->routeIs('my-company.show')">
+        My Company
+      </x-nav-link>
+    @endif
+
+    @if ($isAdmin)
+      <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
+        Companies
+      </x-nav-link>
+    @endif
+
+    @if ($isAdmin)
+      <x-nav-link :href="route('job-categories.index')" :active="request()->routeIs('job-categories.index')">
+        Job Categories
+      </x-nav-link>
+    @endif
+
+    @if ($isAdmin)
+      <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+        Users
+      </x-nav-link>
+    @endif
 
 
 
