@@ -8,10 +8,17 @@
         "framework"
     ],
     "license": "MIT",
+    "repositories": {
+        "job-shared": {
+            "type": "path",
+            "url": "../job-shared"
+        }
+    },
     "require": {
         "php": "^8.2",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "job/shared": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
