@@ -11,6 +11,7 @@
 -   Job-backoffice web client to manage job vacancy posts and job applications and see all the analytics to view applicants.
 -   It will be accessible for Company Owners and admins only.
 -   Job seeker will be able to apply for jobs on the job-app not in job-backoffice.
+-   The database models are shared with **Job-App** and **Job-Backoffice** from the **[Job-Shared library](https://github.com/mostafamansourdev/job-shared.git)**
 
 ## Tech Stack
 
